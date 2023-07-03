@@ -1,0 +1,37 @@
+1. 패키지 생성
+2. views/notice/noticeList.jsp
+   --> boardList.jsp
+3. 컨트롤러 생성
+   --> 매핑 /notice/list.do
+   --> return "notice/noticeList";
+
+
+패키지명 : kr.co.greenart.notice
+
+mapper xml 파일명 : notice/notice-mapper.xml
+
+--------DB--------
+테이블명: notice
+칼럼명
+n_idx (고유 식별자)
+n_title (제목)
+n_content (내용)
+n_writer (작성자)
+n_views (조회수)
+n_create_date (작성 일시)
+n_update_date (수정 일시)
+n_update_writer (수정한 사람)
+
+* 조건 
+n_idx : PRIMARY KEY
+n_title, n_content, n_writer : NOT NULL
+n_views : DEFAULT 0
+n_create_date : DEFAULT SYSDATE
+
+----------------------------------------
+
+더미데이터
+INSERT INTO notice (n_idx, n_title , n_content, n_writer)
+SELECT seq_n_idx.NEXTVAL, '제목' || LEVEL, '내용' || LEVEL, '김재섭'
+FROM DUAL
+CONNECT BY LEVEL <= 200;

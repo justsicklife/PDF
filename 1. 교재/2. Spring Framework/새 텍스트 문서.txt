@@ -1,0 +1,6 @@
+function save() {
+	oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", []);
+	const content = document.getElementById("smartEditor").value;
+	return;
+}
+
