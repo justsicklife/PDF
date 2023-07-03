@@ -1,0 +1,66 @@
+<c:choose>
+				  		<c:when test="${ pi.currentPage eq 1 }">
+						    <li class="page-item">
+						      <a class="page-link" href="#" aria-label="Previous">
+						        <span aria-hidden="true"><<</span>
+						      </a>
+						    </li>
+						    <li class="page-item">
+						      <a class="page-link" href="#" aria-label="Previous">
+						        <span aria-hidden="true"><</span>
+						      </a>
+						    </li>
+					    </c:when>
+					    <c:otherwise>
+					     	<li class="page-item">                   <!-- 1, 11, 21, 31, 41, .... -->
+						      <a class="page-link" href="list.do?cpage=${ pi.startPage -1 }" aria-label="Previous">
+						        <span aria-hidden="true"><<</span>
+						      </a>
+						    </li>
+							<li class="page-item">
+						      <a class="page-link" href="list.do?cpage=${ pi.currentPage - 1}" aria-label="Previous">                                        
+						        <span aria-hidden="true"><</span>
+						      </a>
+						    </li>
+					    </c:otherwise>
+				    </c:choose>
+				    
+				    <c:forEach var="page" begin="${pi.startPage}" end="${pi.endPage}">
+					    <li class="page-item">
+					    	<a class="page-link" href="list.do?cpage=${page}">${page}</a>
+					    </li>
+				    </c:forEach>
+				    
+				    <c:choose>
+				    	<c:when test="${pi.currentPage eq pi.maxPage}">                           
+						    <li class="page-item">
+						      <a class="page-link" href="#" aria-label="Next">
+						        <span aria-hidden="true">></span>
+						      </a>
+						    </li>
+						    <li class="page-item">
+						      <a class="page-link" href="#" aria-label="Next">
+						        <span aria-hidden="true">>></span>
+						      </a>
+						    </li>
+					    </c:when>
+				        <c:when test="${pi.endPage eq pi.maxPage}">
+				          <li class="page-item">
+				            <a class="page-link" href="list.do?cpage=${pi.maxPage}" aria-label="Next">                                 
+				              <span aria-hidden="true">>></span> 
+				            </a>
+				          </li>
+		     		    </c:when>
+					    <c:otherwise>
+					    	<li class="page-item">
+						      <a class="page-link" href="list.do?cpage=${pi.currentPage + 1}" aria-label="Next">                                 
+						        <span aria-hidden="true">></span> 
+						      </a>
+						    </li>
+						    <li class="page-item">              <!-- 10, 20, 30, 40, .... -->
+						      <a class="page-link" href="list.do?cpage=${pi.endPage+1}" aria-label="Next">                                 
+						        <span aria-hidden="true">>></span> 
+						      </a>
+						    </li>
+					    </c:otherwise>
+				    </c:choose>
