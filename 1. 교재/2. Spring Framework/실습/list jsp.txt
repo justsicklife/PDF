@@ -1,0 +1,121 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page session="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!doctype html>
+<html lang="ko" class="h-100">
+<head>
+   	<%@ include file="../common/head.jsp" %>
+	<!-- boardList.css 파일 불러오기 -->
+    <link href="../../resources/css/board/boardList.css" rel="stylesheet">
+</head>
+  <body class="d-flex flex-column h-100">
+  <%@ include file="../common/header.jsp" %>
+		<!-- Begin page content -->
+		<main class="flex-shrink-0">
+		  <div class="container">
+		<h3>자유 게시판</h2>
+		<hr>
+		<br/>
+			  <table class="table table-hover">
+			  <thead>
+			  	<tr>
+			  		<td>선택</td>
+			  	  <td>번호</td>
+			  	  <td>카테고리</td>
+			  	  <td>제목</td>
+			  	  <td>작성자</td>
+			  	  <td>작성일</td>
+			  	  <td>조회수</td>
+			  	</tr>
+			  </thead>
+		 		<tbody>
+			 				<tr onclick="location.href='/board/detail.do?boardIdx=1'">
+				        <td>
+				            <input type="checkbox" name="itemCheckbox" onclick="event.stopPropagation();" />
+				        </td> 			
+				        <td>3</td>
+			 					<td>잡담</td>
+			 					<td>제목</td>
+			 					<td>홍길동</td>
+			 					<td>2023-07-04</td>
+			 					<td>145</td>
+							</tr>
+							<tr>
+				        <td>
+				            <input type="checkbox" name="itemCheckbox" onclick="event.stopPropagation();" />
+				        </td> 			
+				        <td>2</td>
+			 					<td>정보</td>
+			 					<td>제목</td>
+			 					<td>홍길동</td>
+			 					<td>2023-07-04</td>
+			 					<td>145</td>
+			 				</tr>
+			        <tr>
+			        	<td>	
+				            <input type="checkbox" name="itemCheckbox" onclick="event.stopPropagation();" />
+				        </td> 			
+				        <td>1</td>
+			 					<td>공유</td>
+			 					<td>제목</td>
+			 					<td>홍길동</td>
+			 					<td>2023-07-04</td>
+			 					<td>145</td>
+			 				</tr>
+			 	</tbody>
+		 
+	      <div class="d-grid gap-2d-md-flex justify-content-end float-right ">
+				  <button class="btn btn-dark me-md-2" type="button"
+				  		  onclick="location.href='enrollForm.do';">글쓰기</button>
+				</div> 
+				</table>
+				
+				
+				<nav aria-label="Page navigation example ">
+				  <ul class="pagination justify-content-center">
+						    <li class="page-item">
+						      <a class="page-link" href="#" aria-label="Previous">
+						        <span aria-hidden="true"><<</span>
+						      </a>
+							<li class="page-item">
+						      <a class="page-link" href="#" aria-label="Previous">                                        
+						        <span aria-hidden="true"><</span>
+						      </a>
+					    </li>
+				    
+					    <li class="page-item">
+					    	<a class="page-link" href="#">1</a>
+					    </li>
+					    <li class="page-item">
+					    	<a class="page-link" href="#">2</a>
+					    </li>
+					    <li class="page-item">
+					    	<a class="page-link" href="#">3</a>
+					    </li>
+					    <li class="page-item">
+					    	<a class="page-link" href="#">4</a>
+					    </li>
+					    <li class="page-item">
+					    	<a class="page-link" href="#">5</a>
+					    </li>
+				    
+					    <li class="page-item">
+					      <a class="page-link" href="#" aria-label="Next">                                 
+					        <span aria-hidden="true">></span> 
+					      </a>
+					    </li>
+				    	<li class="page-item">
+					      <a class="page-link" href="#" aria-label="Next">                                 
+					        <span aria-hidden="true">>></span> 
+					      </a>
+					    </li>
+				  </ul>
+				</nav>
+				
+				
+		  </div>
+		</main>
+		<%@ include file="../common/footer.jsp" %>
+  	</body>
+</html>

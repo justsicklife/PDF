@@ -1,0 +1,53 @@
+-- 폴더명 : free
+-- 패키지 : free
+
+<header.jsp>
+- 자유게시판 메뉴 추가
+
+<게시판 리스트>
+- 각 카테고리에 맞는 내용 출력
+
+<글쓰기>
+-카테고리에 대한 정보 추가 가능
+
+<게시글 상세보기>
+- 작성일, 조회수, 카테고리 출력
+
+<게시글 삭제>
+- 게시글 삭제 시 f_delete_date에 삭제 일시가 들어가고 리스트 페이지에 보이지 않음 (DELETE문 X)
+
+<게시글 수정>
+- 게시글 수정 시 f_update_date에 수정 일시가 들어가고 f_update_writer에 수정한 사람의 이름이 들어감
+- 카테고리에 대한 정보 수정 가능
+
+------------------------------------------------------------
+
+CREATE TABLE free (
+  f_idx NUMBER(10) PRIMARY KEY,
+  f_title VARCHAR2(100) NOT NULL,
+  f_content CLOB NOT NULL,
+  f_writer VARCHAR2(50) NOT NULL,
+  f_views NUMBER(10) DEFAULT 0,
+  f_category VARCHAR2(50),
+  f_create_date DATE DEFAULT SYSDATE,
+  f_update_date DATE,
+  f_update_writer VARCHAR2(50),
+  f_delete_date DATE
+);
+
+CREATE SEQUENCE seq_f_idx
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE
+  NOCYCLE;	
+
+CREATE SEQUENCE seq_f_views
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE
+  NOCYCLE;
+
+INSERT INTO free (f_idx, f_title, f_content, f_writer)
+SELECT seq_f_idx.NEXTVAL, '제목' || LEVEL, '내용' || LEVEL, '김재섭'
+FROM DUAL
+CONNECT BY LEVEL <= 200;
