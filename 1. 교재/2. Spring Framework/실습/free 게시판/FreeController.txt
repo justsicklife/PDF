@@ -1,0 +1,183 @@
+package kr.co.greenart.free.controller;
+
+import java.util.List;
+import java.util.Objects;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import kr.co.greenart.common.model.dto.PageInfo;
+import kr.co.greenart.common.template.Pagination;
+import kr.co.greenart.free.model.dto.Free;
+import kr.co.greenart.free.model.service.FreeServiceImpl;
+
+@Controller
+@RequestMapping("/free") 
+public class FreeController {
+	@Autowired
+	private FreeServiceImpl freeService;
+	
+	@GetMapping("/list.do")
+	public String freeList(@RequestParam(value="cpage", defaultValue="1") int currentPage, 
+							Model model,
+							HttpSession session) {
+		// 전체 게시글 수 구하기
+		int listCount = freeService.selectListCount();                                                             
+		
+		// 보여질 페이지 수
+		int pageLimit = 10;
+		
+		// 한 페이지에 보여질 게시글 수
+		int boardLimit = 15;
+		
+		// 글 번호 뒤에서부터 출력해주는 변수
+		int row = listCount - (currentPage-1) * boardLimit;
+		
+		// 페이징 로직 처리
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		// 목록 불러오기
+		List<Free> list = freeService.selectListAll(pi);
+		
+		for(Free item : list) {
+			item.setCreateDate(item.getCreateDate().substring(0, 10));
+			// 추가
+			if(item.getCategory().equals("chat")) {
+				item.setCategory("잡담");
+			} else if(item.getCategory().equals("information")) {
+				item.setCategory("정보");
+			} else if(item.getCategory().equals("share")) {
+				item.setCategory("공유");
+			} 
+		}
+		
+		// 로그인 메시지
+		String msg = (String) session.getAttribute("msg");
+		String status = (String) session.getAttribute("status");
+		
+		model.addAttribute("list", list); // 객체 바인딩
+		model.addAttribute("pi", pi);
+		model.addAttribute("row", row);
+		model.addAttribute("msg", msg);
+		model.addAttribute("status", status);
+		
+		session.removeAttribute("msg");
+		session.removeAttribute("status");
+		
+		return "free/freeList";
+	}
+	
+	@GetMapping("enrollForm.do")
+	public String enrollForm() {
+		return "free/freeEnroll";
+	}
+	
+	@PostMapping("insert.do")
+	public String insertFree(Free free, HttpSession session) {
+		free.setWriter((String) session.getAttribute("memberName"));
+		System.out.println(free.getCategory());
+		
+		
+		int result = freeService.insertFree(free);
+		
+		if(result>0) {
+			return "redirect:/free/list.do";
+		} else {
+			return "common/errorPage";
+		}
+	}
+	
+	@GetMapping("detail.do")
+	public String detailFree(@RequestParam(value="freeIdx") int idx,
+							  Model model,
+							  HttpSession session) {
+		Free result = freeService.detailFree(idx);
+		
+		if(!Objects.isNull(result)) {
+			int count = result.getViews()+1;
+			result.setViews(count);
+			result.setIdx(idx);
+			
+			// 추가
+			result.setCreateDate(result.getCreateDate().substring(0, 10));
+
+			freeService.countFree(result);
+			
+			model.addAttribute("detail", result);
+			model.addAttribute("user", session.getAttribute("memberName"));
+			return "free/freeDetail";
+		} else {
+			// 원래는 에러페이지로 넘겨야함
+			return "";
+		}
+	}
+	
+	@PostMapping("update.do")
+	public String updateFree(Free free, HttpSession session) {
+		free.setWriter((String)session.getAttribute("memberName"));
+		int result = freeService.updateFree(free);
+		
+		if(result > 0) {
+			session.setAttribute("msg", "수정 되었습니다.");
+			session.setAttribute("status", "success");
+			return "redirect:/free/list.do";
+		} else {
+			session.setAttribute("msg", "수정에 실패했습니다.");
+			session.setAttribute("status", "error");
+			return "redirect:/free/list.do";
+		}
+	}
+	
+	@PostMapping("delete.do")
+	public String deleteFree(Free free, HttpSession session) {
+		free.setWriter((String)session.getAttribute("memberName"));
+		int result = freeService.deleteFree(free);
+		
+		if(result > 0) {
+			session.setAttribute("msg", "삭제 되었습니다.");
+			session.setAttribute("status", "success");
+			return "redirect:/free/list.do";
+		} else {
+			session.setAttribute("msg", "삭제에 실패했습니다.");
+			session.setAttribute("status", "error");
+			return "redirect:/free/list.do";
+		}
+	}
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

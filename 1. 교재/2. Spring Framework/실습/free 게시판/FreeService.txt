@@ -1,0 +1,39 @@
+package kr.co.greenart.free.model.service;
+
+import java.util.List;
+
+import kr.co.greenart.common.model.dto.PageInfo;
+import kr.co.greenart.free.model.dto.Free;
+
+public interface FreeService {
+	// 전체 게시글 수 구하기
+	// 추상 메서드 
+	int selectListCount();
+	
+	// 목록 불러오기
+	List<Free> selectListAll(PageInfo pi);
+	
+	// 글쓰기
+	int insertFree(Free free);
+	
+	// 상세보기
+	Free detailFree(int idx);
+	
+	// 조회수
+	int countFree(Free free);
+	
+	// 수정
+	int updateFree(Free free);
+	
+	// 삭제free
+	int deleteFree(Free free);
+	
+}
+
+
+
+
+
+
+
+

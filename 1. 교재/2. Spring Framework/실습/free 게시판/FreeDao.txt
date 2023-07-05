@@ -1,0 +1,54 @@
+package kr.co.greenart.free.model.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
+
+import kr.co.greenart.common.model.dto.PageInfo;
+import kr.co.greenart.free.model.dto.Free;
+
+@Repository
+public class FreeDao {
+
+	public int selectListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("freeMapper.selectListCount");
+	}
+	
+	public List<Free> selectListAll(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return sqlSession.selectList("freeMapper.selectListAll", null, rowBounds);
+	}
+
+	public int insertFree(SqlSessionTemplate sqlSession, Free free) {
+		return sqlSession.insert("freeMapper.insertFree", free);
+	}
+	
+	public Free detailFree(SqlSessionTemplate sqlSession, int idx) {
+		return sqlSession.selectOne("freeMapper.detailFree", idx);
+	}
+	
+	public int countFree(SqlSessionTemplate sqlSession, Free free) {
+		return sqlSession.update("freeMapper.countFree", free);
+	}
+	
+	public int updateFree(SqlSessionTemplate sqlSession, Free free) {
+		return sqlSession.update("freeMapper.updateFree", free);
+	}
+
+	public int deleteFree(SqlSessionTemplate sqlSession, Free free) {
+		return sqlSession.update("freeMapper.deleteFree", free);
+	}
+}
+
+
+
+
+
+
+
+

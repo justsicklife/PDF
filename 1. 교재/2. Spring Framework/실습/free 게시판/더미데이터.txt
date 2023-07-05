@@ -1,0 +1,27 @@
+-- 기존 테이블 삭제
+DROP TABLE FREE;
+
+-- 테이블 생성	  
+CREATE TABLE free (
+  f_idx NUMBER(10) PRIMARY KEY,
+  f_title VARCHAR2(100) NOT NULL,
+  f_content CLOB NOT NULL,
+  f_writer VARCHAR2(50) NOT NULL,
+  f_views NUMBER(10) DEFAULT 0,
+  f_category VARCHAR2(50),
+  f_create_date DATE DEFAULT SYSDATE,
+  f_update_date DATE,
+  f_update_writer VARCHAR2(50),
+  f_delete_date DATE
+);
+
+
+
+
+-- 데이터 삽입
+INSERT INTO free (f_idx, f_title, f_content, f_writer, f_category)
+SELECT seq_f_idx.NEXTVAL, '제목' || LEVEL, '내용' || LEVEL, '김재섭', 'chat'
+FROM DUAL
+CONNECT BY LEVEL <= 200;
+	COMMIT;  
+	  SELECT * FROM FREE;

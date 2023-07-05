@@ -1,0 +1,118 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!doctype html>
+<html lang="ko" class="h-100">
+
+	<head>
+		<%@ include file="../common/head.jsp" %>
+		<c:if test="${detail.writer == user}">
+			<%@ include file="../common/smarteditor2.jsp" %>
+		</c:if>
+	</head>
+<body class="d-flex flex-column h-100">
+
+	<!-- Fixed navbar -->
+	<%@ include file="../common/header.jsp" %>
+	
+	<!-- Begin page content -->
+	<main class="flex-shrink-0">
+		<div class="container">
+			<h3>상세보기</h3>
+			<hr>
+			<br/>
+			
+			<form id="form-submit" method="post">
+				<input type="hidden" name="idx" value="${detail.idx }"/>
+
+				<div class="mb-3 justify-content-center">
+				<label for="exampleFormControlInput1" class="form-label">제목</label>
+					<input type="text" class="form-control"
+						   name="title"
+						   value="${detail.title}"
+						   id="exampleFormControlInput1" placeholder="제목을 입력하세요." ${detail.writer != user ? 'readonly' : '' }>
+				</div>
+				
+				<div class="mb-3 justify-content-center">
+				    <label for="categorySelect" class="form-label">카테고리</label>
+				    <c:choose>
+				    	<c:when test="${detail.writer == user}">
+						    <select class="form-select" id="categorySelect" name="category">
+						        <option value="chat" 
+						        				${detail.category == 'chat' ? 'selected="selected"' : '' }>
+						        				잡담
+						        </option>
+						        <option value="information" 
+						        				${detail.category == 'information' ? 'selected="selected"' : '' }>
+						        				정보
+		        				</option>
+						        <option value="share" 
+						        				${detail.category == 'share' ? 'selected="selected"' : '' }>
+						        				공유
+		        				</option>
+						    </select>
+					    </c:when>
+					    <c:otherwise>
+						    <input class="form-control" type="text" value="${detail.category}" readonly>
+					    </c:otherwise>
+				    </c:choose>
+				</div>
+				
+				<div class="row">
+				    <div class="col-md-6">
+				        <label for="writeDateInput" class="form-label">작성일</label>
+				        <input type="text" class="form-control" id="writeDateInput" name="createDate" value="${detail.createDate }" readonly>
+				    </div>
+				    <div class="col-md-6">
+				        <label for="viewCountInput" class="form-label">조회수</label>
+				        <input type="number" class="form-control" id="viewCountInput" name="views" value="${detail.views }" readonly>                            
+				    </div>
+				</div>
+				<br>
+				
+				<div id="smarteditor mb-3 justify-content-center">
+					<c:choose>
+							<c:when test="${detail.writer == user}">
+								<label for="editorTxt" class="form-label">내용</label>
+								<textarea name="content" id="editorTxt"
+										  class="form-control"
+										  rows="13" cols="10"
+										  placeholder="내용을 입력해주세요"
+										  >${detail.content}</textarea>
+ 					    </c:when>
+			    		<c:otherwise>
+   							<div name="content" id="editorTxt"
+									  class="form-control"
+									  rows="13" cols="10"
+									  placeholder="내용을 입력해주세요"
+									  style="height: 300px;"
+									  readonly>${detail.content}</div>
+					    </c:otherwise>
+				    </c:choose>
+				</div>
+					
+					<div class="row">
+					
+					<div class="col text-center">
+						<button type="button" class="btn btn-light" onclick="history.back()">취소</button>
+						<c:if test="${detail.writer == user}">
+							<button type="button" onclick="submitForm('/free/update.do')" class="btn btn-primary">수정</button>
+							<button type="button" onclick="submitForm('/free/delete.do')" class="btn btn-danger">삭제</button>
+						</c:if>
+				</div>
+			</form>
+			
+		</div>
+	</main>
+	
+	<%@ include file="../common/footer.jsp" %>
+</body>
+</html>
+
+<script>
+	function submitForm(action) {
+		const form = document.getElementById('form-submit');
+		form.action = action;
+		save();
+		form.submit();
+	}
+</script>

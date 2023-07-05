@@ -1,0 +1,27 @@
+package kr.co.greenart.free.model.dto;
+
+import java.sql.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class Free {
+	private int idx;
+	private String title;
+	private String content;
+	private String writer;
+	private int views;
+	private String category;
+	private String createDate;
+	private String updateDate;
+	private String updateWriter;
+	private String deleteDate;
+}

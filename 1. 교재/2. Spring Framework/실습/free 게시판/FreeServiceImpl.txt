@@ -1,0 +1,61 @@
+package kr.co.greenart.free.model.service;
+
+import java.util.List;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.co.greenart.common.model.dto.PageInfo;
+import kr.co.greenart.free.model.dao.FreeDao;
+import kr.co.greenart.free.model.dto.Free;
+
+@Service
+public class FreeServiceImpl implements FreeService {
+
+	@Autowired
+	private FreeDao freeDao;
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
+	@Override
+	public int selectListCount() {
+		return freeDao.selectListCount(sqlSession);
+	}
+	
+	@Override
+	public List<Free> selectListAll(PageInfo pi) {
+		return freeDao.selectListAll(sqlSession, pi);
+	}
+
+	@Override
+	public int insertFree(Free free) {
+		return freeDao.insertFree(sqlSession, free);
+	}
+	
+	@Override
+	public Free detailFree(int idx) {
+		return freeDao.detailFree(sqlSession, idx);
+	}
+	
+	@Override
+	public int countFree(Free free) {
+		return freeDao.countFree(sqlSession, free);
+	}
+	
+	@Override
+	public int updateFree(Free bo) {
+		return freeDao.updateFree(sqlSession, bo);
+	}
+	
+	@Override
+	public int deleteFree(Free free) {
+		return freeDao.deleteFree(sqlSession, free);
+	}
+	
+	
+	
+	
+	
+}

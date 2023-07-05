@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="freeMapper">
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM free
+		WHERE F_DELETE_DATE IS NULL
+	</select>
+	
+	<!-- DTO랑 똑같음, 근데 얘는 DB 컬럼이랑 DTO랑 맞춰주는거 -->
+	<resultMap type="free" id="freeResultSet">
+		<result column="F_IDX" property="idx"></result>
+		<result column="F_TITLE" property="title"></result>
+		<result column="F_CONTENT" property="content"></result>
+		<result column="F_WRITER" property="writer"></result>
+		<result column="F_VIEWS" property="views"></result>
+		<result column="F_CATEGORY" property="category"></result>
+		<result column="F_CREATE_DATE" property="createDate"></result>
+		<result column="F_UPDATE_DATE" property="updateDate"></result>
+		<result column="F_UPDATE_WRITER" property="updateWriter"></result>
+		<result column="F_DELETE_DATE" property="deleteDate"></result>
+	</resultMap>
+	
+	<select id="selectListAll" resultMap="freeResultSet">
+		SELECT * FROM free
+		WHERE F_DELETE_DATE IS NULL
+		ORDER BY F_CREATE_DATE DESC
+	</select>
+	
+	<insert id="insertFree">
+		INSERT INTO free(F_IDX,
+						  F_TITLE,
+						  F_CONTENT,
+						  F_WRITER,
+						  F_VIEWS,
+						  F_CATEGORY,
+						  F_CREATE_DATE)
+			   VALUES(seq_f_idx.NEXTVAL,
+			   		  #{title},
+			   		  #{content},
+			   		  #{writer},
+			   		  DEFAULT,
+			   		  #{category},
+			   		  SYSDATE)
+	</insert>
+ 
+	<select id="detailFree" resultMap="freeResultSet">
+		SELECT F_TITLE, 
+			  	 F_CATEGORY, 
+			  	 F_CONTENT, 
+			  	 F_CREATE_DATE, 
+			  	 F_VIEWS, 
+			  	 F_WRITER
+ 	  FROM free
+		WHERE F_IDX = #{idx}
+	</select>
+
+	<update id="countFree" parameterType="Free">
+		UPDATE free SET f_views = #{views}
+				     WHERE f_idx = #{idx}
+	</update>
+
+	<update id="updateFree" parameterType="Free">
+		UPDATE free SET f_title = #{title},
+										 f_content = #{content},
+										 f_category = #{category},
+										 f_update_date = SYSDATE,
+										 f_update_writer = #{writer}
+								 WHERE f_idx = #{idx}
+	</update>
+	
+	<update id="deleteFree" parameterType="Free">
+		UPDATE free SET f_delete_date = SYSDATE
+								 WHERE f_idx = #{idx}
+	</update>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
