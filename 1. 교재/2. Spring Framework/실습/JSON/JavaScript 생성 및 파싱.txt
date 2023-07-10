@@ -1,0 +1,25 @@
+// $(document).ready()
+	document.addEventListener("DOMContentLoaded", function(){
+		// JavaScript 객체
+		let student = {
+				name: "Jaeseop",
+				age: 21,
+				isAdmin: true,
+				courses: ['html', 'css', 'js'],
+				wife: null
+		}
+		
+		// student : 객체
+		// JSON.stringify : JavaScript 객체를 JSON 형식의 문자열로 변환
+		// JSON 생성
+		console.log(typeof student); // Object
+		let student_json = JSON.stringify(student);
+		console.log(student_json); // JSON 형식의 문자열 출력
+		console.log(typeof student_json); // String
+		
+		// JSON 파싱
+		// JSON.parse : JSON 형식의 문자열을 JavaScript 객체로 변환
+		let student_parse = JSON.parse(student_json);
+		console.log(student_parse);
+		console.log(typeof student_parse);
+	})

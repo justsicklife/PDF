@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko-kr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<!-- Vuejs2 CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+	<div id="app">
+		<!-- {{ message }} -->
+
+		<!-- <span :title="message">
+			바인드
+		</span> -->
+
+		<!-- {{ message }}
+		<p v-html="message"></p> -->
+		
+		<!-- <p v-if="isTrue"> if 참 입니다. </p>
+		<p v-show="isTrue"> show 참 입니다. </p> -->
+		<!-- <p v-else>else 입니다.</p> -->
+
+		<!-- <ul>
+			<li v-for="message in messageList">
+				{{ message.text }}
+			</li>
+		</ul> -->
+
+		<h3>Q1. 버튼의 숫자가 20까지만 설정되도록 하기</h3>
+		<p v-if="num < 20">{{ num }}</p>
+		<p v-else>20</p>
+		<button @click="add">버튼을 눌러주세요.</button>
+
+		<hr>
+		<h3>Q2. 버튼 클릭할 때 마다 텍스트 숨김/보임 처리</h3>
+		<button @click="toggleElement">{{ btn }}</button>
+		<div v-if="showText">
+			<p>텍스트</p>
+		</div>
+		<hr>
+
+		<h3>Q3. 구구단 정답 맞추기</h3>
+		<p>{{ first }} * {{ second }} </p>
+		<input type="text" v-model="value"></input>
+		<button @click="check">정답 입력</button>
+		<p>{{ result }}</p>
+	</div>
+</body>
+</html>
+
+<script>
+	let vm = new Vue({
+		el: '#app',
+		data: {
+			num : 0,
+			btn : '숨김',
+			showText : true,
+			first : Math.ceil(Math.random()*9),
+			second : Math.ceil(Math.random()*9),
+			result : '',
+			value : ''
+		},
+		methods: {
+			add: function() {
+				// if(this.num < 20) {
+					this.num = this.num + 1;
+				// }
+			},
+			toggleElement: function() {
+				if(this.btn === '숨김') {
+					this.btn = '보임';
+				} else {
+					this.btn = '숨김';
+				}
+				this.showText = !this.showText;
+			},
+			check: function() {
+				// 정답인 경우 : first*second == value
+				// if(this.first * this.second == this.value) {
+				if(this.first * this.second === parseInt(this.value)) {
+					this.result = "정답"
+					this.first = Math.ceil(Math.random()*9)
+					this.second = Math.ceil(Math.random()*9)
+				} else {
+					this.result = "땡"
+				}
+			}
+		}
+	})
+</script>
+
+
+
+
+
+
+
+
+
+
+
