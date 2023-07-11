@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko-kr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!-- Vuejs2 CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+  <!-- 문제
+  Q1. 뷰 인스턴스를 생성하고 HTML div 요소에 바인딩 하세요.
+
+  Q2. 뷰 인스턴스의 데이터 속성을 정의하고, todoList 배열에 3개 이상의 값을 넣으세요.
+  ex) id: 1, text : '밥먹기'
+
+  Q3. todoList 배열을 ul > li 태그로 모두 꺼내 보세요.
+
+  Q4. 아래의 input 태그에 사용자가 입력할 경우 p 태그에 입력한 값이 출력 되도록 코드를 작성하세요.
+  <p> {{ message }} </p>
+  <input />
+
+  Q5. 버튼을 클릭했을 때 btnText에 "버튼을 눌럿습니다."가 출력되도록 코드를 작성하세요.
+  <p> {{ btnText }} </p>
+  <button> 버튼 </button>
+
+  Q6. input 태그에 사용자가 몇 월(1~12)인지 입력하고 버튼을 클릭할 경우 p 태그에 무슨 계절인지 출력하세요.
+  - 3,4,5 : 봄
+  - 6,7,8 : 여름
+  - 9,10,11 : 가을
+  - 12,1,2 : 겨울
+  - 그 외 : 잘못된 입력입니다.
+  <p> {{ season }} </p>
+  <input />
+  <button> 버튼 <button> -->
+
+  <div id="quiz">
+    
+    <!-- 3번 답 -->
+    <h3>Q1 ~ Q3</h3>
+    <ul>
+      <li v-for="list in todoList">
+        {{ list.text }}        
+      </li>
+    </ul>
+    <hr>
+
+    <!-- 4번 답 -->
+    <h3>Q4</h3>
+    <p>{{ message }}</p>
+    <input v-model="message"/>
+
+    <hr>
+    <!-- 5번 답 -->
+    <h3>Q5</h3>
+    <p>{{ btnText }}</p>
+    <button @click="btnClick"> 버튼 </button>
+
+    <hr>
+    <!-- 6번 답 -->
+    <h3>Q6</h3>
+    <p> {{ season }} </p>
+    <input v-model="month" />
+    <button @click="monthCheck"> 버튼 </button>
+  </div>
+  
+</body>
+</html>
+
+<script>
+	let vm = new Vue({
+    // 1번 답
+		el: '#quiz',
+    data: {
+      // 2번 답
+      todoList: [
+        {id:1, text:'밥먹기'},
+        {id:2, text:'눕기'},
+        {id:3, text:'잠자기'},
+      ],
+      message: '',
+      btnText: '',
+      month: '',
+      season: ''
+    },
+    methods: {
+      btnClick : function() {
+        this.btnText = "버튼을 눌럿습니다."
+      },
+      monthCheck : function() {
+        if(3 <= this.month && this.month <= 5 ) {
+          this.season = "봄";
+        } else if(6 <= this.month && this.month <= 8) {
+          this.season = "여름";
+        } else if(9 <= this.month && this.month <= 11) {
+          this.season = "가을";
+        } else if(12 == this.month || this.month <= 2) {
+          this.season = "겨울";
+        } else {
+          this.season = "잘못된 입력입니다."
+        }
+      }
+    }
+	});
+
+</script>
+
