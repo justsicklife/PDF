@@ -1,0 +1,25 @@
+<template>
+  <div>
+    <button @click="Increment">Increment</button>
+    <p>Child Count : {{ count }}</p>
+    
+    <button @click="getName">getName</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      count: 0,
+      name: '홍길동'
+    }
+  },
+  methods: {
+    Increment: function() {
+      this.count++;
+      this.$emit('increment', this.count);
+    }
+  }
+}
+</script>

@@ -1,0 +1,23 @@
+<template>
+  <div :style="{ backgroundColor: bgColor }">
+    <h1>반응형 스타일</h1>
+    <button @click="changeColor">색상 변경</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      bgColor: 'white'
+    };
+  },
+  methods: {
+    changeColor() {
+      // 임의의 색상을 생성하여 배경색으로 설정
+      const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+      this.bgColor = randomColor;
+    }
+  }
+};
+</script>

@@ -1,0 +1,29 @@
+<template>
+  <div>
+    <h1>Parent Component</h1>
+    <p>버튼 클릭한 횟수 : {{ count }}</p>
+    <ChildComponent @increment="parentIncrement" />
+    <p>이름 : {{ name }}</p>
+  </div>
+</template>
+
+<script>
+import ChildComponent from '../../components/ex1_component/ChildComponent.vue'
+
+export default {
+  components: {
+    ChildComponent
+  },
+  data() {
+    return {
+      count: 0,
+      name: ''
+    }
+  },
+  methods: {
+    parentIncrement: function(count) {
+      this.count = count
+    }
+  }
+}
+</script>
