@@ -1,0 +1,35 @@
+<template>
+  <div>
+    <h1>할 일 목록</h1>
+    <input type="text" v-model="newTask" />
+    <button @click="addTask">추가</button>
+    <ul>
+      <li v-for="(task, index) in tasks" :key="index">
+        {{ task }}
+        <button @click="deleteTask(index)">삭제</button>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      newTask: '',
+      tasks: []
+    };
+  },
+  methods: {
+    addTask() {
+      if (this.newTask.trim() !== '') {
+        this.tasks.push(this.newTask);
+        this.newTask = '';
+      }
+    },
+    deleteTask(index) {
+      this.tasks.splice(index, 1);
+    }
+  }
+};
+</script>
